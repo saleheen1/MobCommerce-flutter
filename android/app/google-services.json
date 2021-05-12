@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "476416134472",
+    "project_id": "mobile-seller-commerce",
+    "storage_bucket": "mobile-seller-commerce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:476416134472:android:74a8012569f1a01204777d",
+        "android_client_info": {
+          "package_name": "com.example.mobile_seller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "476416134472-arin2gk88k2ivtcc7mfq8pc862ekfk29.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaQ1GQViNXO_hd-F1si0XtNCO4SNQpQ-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "476416134472-arin2gk88k2ivtcc7mfq8pc862ekfk29.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
