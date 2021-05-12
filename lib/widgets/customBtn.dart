@@ -6,23 +6,37 @@ class CustomButton extends StatelessWidget {
   final Function onPressed;
   final bool outlineBtn;
 
-  const CustomButton({Key key, this.text, this.onPressed, this.outlineBtn})
+  const CustomButton(
+      {Key key, this.text, this.onPressed, this.outlineBtn = true})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 60, vertical: 10),
-        margin: EdgeInsets.only(bottom: 50),
-        decoration: BoxDecoration(
-            border: Border.all(
-              color: Constants.kPrimary,
-              width: 1,
+    return Column(
+      children: [
+        InkWell(
+          onTap: onPressed,
+          child: Container(
+            alignment: Alignment.center,
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(horizontal: 60, vertical: 10),
+            decoration: BoxDecoration(
+                color: outlineBtn ? Colors.transparent : Constants.kPrimary,
+                border: Border.all(
+                  color: Constants.kPrimary,
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(6)),
+            child: Text(
+              text ?? "Text",
+              style: TextStyle(
+                  color: outlineBtn ? Constants.kPrimary : Colors.white),
             ),
-            borderRadius: BorderRadius.circular(6)),
-        child: Text(text ?? "Text"),
-      ),
+          ),
+        ),
+        SizedBox(
+          height: 50,
+        )
+      ],
     );
   }
 }
