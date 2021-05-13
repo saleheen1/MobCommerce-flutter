@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mobile_seller/widgets/constants.dart';
 
 class CustomInput extends StatelessWidget {
@@ -28,6 +29,10 @@ class CustomInput extends StatelessWidget {
         decoration: BoxDecoration(
             color: Color(0xfff2f2f2), borderRadius: BorderRadius.circular(6)),
         child: TextField(
+          //prevent user form entering empty space
+          inputFormatters: [
+            FilteringTextInputFormatter.deny(new RegExp(r"\s\b|\b\s"))
+          ],
           focusNode: focusNode,
           onChanged: onChanged,
           onSubmitted: onSubmitted,

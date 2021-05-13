@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_seller/widgets/constants.dart';
 
@@ -12,10 +13,15 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Scaffold(
         body: Center(
-          child: Container(
-            child: Text(
-              "Homepage",
-              style: Constants.regularHeading,
+          child: InkWell(
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+            },
+            child: Container(
+              child: Text(
+                "Log out",
+                style: Constants.regularHeading,
+              ),
             ),
           ),
         ),

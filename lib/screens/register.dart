@@ -51,22 +51,15 @@ class _RegisterPageState extends State<RegisterPage> {
     } catch (e) {
       return (e.toString());
     }
-    // try {
-    //   await FirebaseAuth.instance.signInWithEmailAndPassword(
-    //       email: "barry.allen@example.com", password: "SuperSecretPassword!");
-    // } on FirebaseAuthException catch (e) {
-    //   print('Failed with error code: ${e.code}');
-    //   print(e.message);
-    // }
   }
 
-  void _formErrorToast(String message) {
+  void _formErrorToast(String message, Color _color) {
     Fluttertoast.showToast(
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
+        backgroundColor: _color,
         textColor: Colors.white,
         fontSize: 16.0);
   }
@@ -78,10 +71,14 @@ class _RegisterPageState extends State<RegisterPage> {
     String _createAccountFeedback = await _createAccount();
     if (_createAccountFeedback != null) {
       //if it's not null then we have some error
-      _formErrorToast(_createAccountFeedback);
+      _formErrorToast(_createAccountFeedback, Colors.red);
       setState(() {
         loadingForm = false;
       });
+    } else {
+      //else account created successfully
+      _formErrorToast("Account created successfully!", Colors.green);
+      Get.back();
     }
   }
 
