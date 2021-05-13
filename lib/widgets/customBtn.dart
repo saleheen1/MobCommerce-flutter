@@ -5,9 +5,14 @@ class CustomButton extends StatelessWidget {
   final String text;
   final Function onPressed;
   final bool outlineBtn;
+  final bool isloading;
 
   const CustomButton(
-      {Key key, this.text, this.onPressed, this.outlineBtn = true})
+      {Key key,
+      this.text,
+      this.onPressed,
+      this.outlineBtn = true,
+      this.isloading = false})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -16,9 +21,9 @@ class CustomButton extends StatelessWidget {
         InkWell(
           onTap: onPressed,
           child: Container(
-            alignment: Alignment.center,
             width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 60, vertical: 10),
+            height: 50,
+            // padding: EdgeInsets.symmetric(horizontal: 60, vertical: 10),
             decoration: BoxDecoration(
                 color: outlineBtn ? Colors.transparent : Constants.kPrimary,
                 border: Border.all(
@@ -26,10 +31,26 @@ class CustomButton extends StatelessWidget {
                   width: 1,
                 ),
                 borderRadius: BorderRadius.circular(6)),
-            child: Text(
-              text ?? "Text",
-              style: TextStyle(
-                  color: outlineBtn ? Constants.kPrimary : Colors.white),
+            child: Stack(
+              children: [
+                Visibility(
+                  visible: isloading ? false : true,
+                  child: Center(
+                    child: Text(
+                      text ?? "Text",
+                      style: TextStyle(
+                          color:
+                              outlineBtn ? Constants.kPrimary : Colors.white),
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: isloading ? true : false,
+                  child: Center(
+                      child: SizedBox(
+                          height: 36, child: CircularProgressIndicator())),
+                )
+              ],
             ),
           ),
         ),
