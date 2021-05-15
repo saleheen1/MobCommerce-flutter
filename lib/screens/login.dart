@@ -66,7 +66,6 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       //else account created successfully
       _formErrorToast("Successfully Logged in!", Colors.green);
-      Get.back();
     }
   }
 

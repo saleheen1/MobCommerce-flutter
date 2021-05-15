@@ -8,7 +8,7 @@
             "name": "mobile_seller",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            // "flutterMode": "profile"
         }
     ]
 }
