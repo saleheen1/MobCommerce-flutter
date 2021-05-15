@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
           // primarySwatch: Colors.black,
           textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
           visualDensity: VisualDensity.adaptivePlatformDensity,
-          accentColor: Color(0xff7209b7)),
+          // accentColor: Color(0xff7209b7)
+          accentColor: Color(0xffff6d00)),
       home: LandingPage(),
     );
   }

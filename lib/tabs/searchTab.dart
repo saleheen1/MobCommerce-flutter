@@ -7,11 +7,11 @@ class SearchTab extends StatelessWidget {
     return Stack(
       children: [
         ActionBar(
-          title: "Searchgit",
+          title: "Search",
         ),
         Center(
           child: Container(
-            child: Text("Searchgit"),
+            child: Text("Search"),
           ),
         ),
       ],
