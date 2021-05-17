@@ -34,7 +34,8 @@ class CustomInput extends StatelessWidget {
             FilteringTextInputFormatter.deny(new RegExp(r"\s\b|\b\s"))
           ],
           focusNode: focusNode,
-          onChanged: onChanged,
+          onChanged: onChanged, //its's like saying onChanged:
+          //(value){_userEmail/pass... = value} basically the value is sent to other page or in other words we are writing the function in other page referencing that function here
           onSubmitted: onSubmitted,
           textInputAction: textInputAction,
           obscureText: isPasswordField,

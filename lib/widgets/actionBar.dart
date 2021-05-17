@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobile_seller/screens/cartPage.dart';
+import 'package:mobile_seller/services/firebaseServices.dart';
 import 'package:mobile_seller/widgets/constants.dart';
 
 class ActionBar extends StatelessWidget {
@@ -12,7 +14,7 @@ class ActionBar extends StatelessWidget {
   final CollectionReference _userRef =
       FirebaseFirestore.instance.collection("Users");
 
-  final User _user = FirebaseAuth.instance.currentUser;
+  FirebaseServices _firebaseServices = FirebaseServices();
 
   @override
   Widget build(BuildContext context) {
@@ -48,25 +50,33 @@ class ActionBar extends StatelessWidget {
                   width: 0,
                   child: Center(),
                 ),
-          Container(
-            alignment: Alignment.center,
-            height: 40,
-            width: 40,
-            color: Constants.kPrimary,
-            child: StreamBuilder(
-              //quering everything from collection Cart-- to get it real time using snapshot() is needed
-              stream: _userRef.doc(_user.uid).collection("Cart").snapshots(),
-              builder: (context, snapshot) {
-                int totalItems = 0;
-                if (snapshot.connectionState == ConnectionState.active) {
-                  List _documents = snapshot.data.docs;
-                  totalItems = _documents.length;
-                }
-                return Text(
-                  "$totalItems" ?? "0",
-                  style: TextStyle(color: Colors.white),
-                );
-              },
+          InkWell(
+            onTap: () {
+              Get.to(() => CartPage());
+            },
+            child: Container(
+              alignment: Alignment.center,
+              height: 40,
+              width: 40,
+              color: Constants.kPrimary,
+              child: StreamBuilder(
+                //quering everything from collection Cart-- to get it real time using snapshot() is needed
+                stream: _userRef
+                    .doc(_firebaseServices.getUserId())
+                    .collection("Cart")
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  int totalItems = 0;
+                  if (snapshot.connectionState == ConnectionState.active) {
+                    List _documents = snapshot.data.docs;
+                    totalItems = _documents.length;
+                  }
+                  return Text(
+                    "$totalItems" ?? "0",
+                    style: TextStyle(color: Colors.white),
+                  );
+                },
+              ),
             ),
           ),
         ],
