@@ -23,7 +23,7 @@ class HomeTab extends StatelessWidget {
               );
             } else if (snapshot.connectionState == ConnectionState.done) {
               return ListView(
-                padding: EdgeInsets.only(top: 87),
+                padding: EdgeInsets.only(top: 75),
                 children: snapshot.data.docs.map((document) {
                   return Container(
                     padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),

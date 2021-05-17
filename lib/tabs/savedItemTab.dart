@@ -5,14 +5,8 @@ import 'package:mobile_seller/screens/singleProduct.dart';
 import 'package:mobile_seller/services/firebaseServices.dart';
 import 'package:mobile_seller/widgets/actionBar.dart';
 
-class CartPage extends StatefulWidget {
-  @override
-  _CartPageState createState() => _CartPageState();
-}
-
-class _CartPageState extends State<CartPage> {
+class SavedItemTab extends StatelessWidget {
   FirebaseServices _firebaseServices = FirebaseServices();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +16,7 @@ class _CartPageState extends State<CartPage> {
             FutureBuilder<QuerySnapshot>(
               future: _firebaseServices.userRef
                   .doc(_firebaseServices.getUserId())
-                  .collection("Cart")
+                  .collection("SavedItem")
                   .get(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
@@ -124,9 +118,7 @@ class _CartPageState extends State<CartPage> {
                                     ),
                                   );
                                 } else {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
+                                  return Center();
                                 }
                               },
                             )),
@@ -139,7 +131,8 @@ class _CartPageState extends State<CartPage> {
               },
             ),
             ActionBar(
-              title: "Profile",
+              title: "Saved Items",
+              showCart: false,
             ),
           ],
         ),

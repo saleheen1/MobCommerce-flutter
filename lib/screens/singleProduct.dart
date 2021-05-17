@@ -31,6 +31,15 @@ class _SingleProductState extends State<SingleProduct> {
         .set({"size": _selectedProductSize});
   }
 
+  Future _saveItem() {
+    //inserting data
+    return _firebaseServices.userRef
+        .doc(_firebaseServices.getUserId())
+        .collection("SavedItem")
+        .doc(widget.productId)
+        .set({"size": _selectedProductSize});
+  }
+
   void _formErrorToast(String message, Color _color) {
     Fluttertoast.showToast(
         msg: message,
@@ -62,7 +71,7 @@ class _SingleProductState extends State<SingleProduct> {
                 List imageList = documentData['images'];
                 List productSize = documentData['size'];
                 return ListView(
-                  padding: EdgeInsets.only(top: 81),
+                  padding: EdgeInsets.only(top: 65),
                   children: [
                     ProductSlider(
                       imageList: imageList,
@@ -160,16 +169,23 @@ class _SingleProductState extends State<SingleProduct> {
               padding: const EdgeInsets.fromLTRB(25, 15, 25, 15),
               child: Row(
                 children: [
-                  Container(
-                      padding: EdgeInsets.all(14),
-                      margin: EdgeInsets.only(right: 10),
-                      color: Color(0xffdcdcdc),
-                      child: Icon(Icons.bookmark_outline)),
+                  InkWell(
+                    onTap: () async {
+                      await _saveItem();
+                      _formErrorToast("Product saved", Color(0xff65C916));
+                    },
+                    child: Container(
+                        padding: EdgeInsets.all(14),
+                        margin: EdgeInsets.only(right: 10),
+                        color: Color(0xffdcdcdc),
+                        child: Icon(Icons.bookmark_outline)),
+                  ),
                   Expanded(
                     child: InkWell(
                       onTap: () async {
                         await _addToCart();
-                        _formErrorToast("Product added to cart", Colors.green);
+                        _formErrorToast(
+                            "Product added to cart", Color(0xff65C916));
                       },
                       child: Container(
                         alignment: Alignment.center,

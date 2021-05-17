@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_seller/screens/productCard.dart';
 import 'package:mobile_seller/services/firebaseServices.dart';
-import 'package:mobile_seller/widgets/actionBar.dart';
-import 'package:mobile_seller/widgets/constants.dart';
 import 'package:mobile_seller/widgets/customInput.dart';
 
 class SearchTab extends StatefulWidget {

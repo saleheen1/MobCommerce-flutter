@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_seller/screens/landing.dart';
 import 'package:get/get.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.white, // status bar color
+    statusBarIconBrightness: Brightness.dark,
+  ));
   runApp(MyApp());
 }
 

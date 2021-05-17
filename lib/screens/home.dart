@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_seller/tabs/cartTab.dart';
 import 'package:mobile_seller/tabs/homeTab.dart';
 import 'package:mobile_seller/tabs/profileTab.dart';
+import 'package:mobile_seller/tabs/savedItemTab.dart';
 import 'package:mobile_seller/tabs/searchTab.dart';
 import 'package:mobile_seller/widgets/bottomTab.dart';
 import 'package:mobile_seller/widgets/constants.dart';
@@ -49,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     HomeTab(),
                     SearchTab(),
-                    CartTab(),
+                    SavedItemTab(),
                     ProfileTab(),
                   ],
                 ),
