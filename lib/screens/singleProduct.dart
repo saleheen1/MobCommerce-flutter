@@ -1,24 +1,59 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobile_seller/widgets/actionBar.dart';
 import 'package:mobile_seller/widgets/constants.dart';
 import 'package:mobile_seller/widgets/productSlider.dart';
 
-class SingleProduct extends StatelessWidget {
-  final CollectionReference _productRef =
-      FirebaseFirestore.instance.collection("Products");
+class SingleProduct extends StatefulWidget {
   final productId;
 
   SingleProduct({Key key, this.productId}) : super(key: key);
+
+  @override
+  _SingleProductState createState() => _SingleProductState();
+}
+
+class _SingleProductState extends State<SingleProduct> {
+  final CollectionReference _productRef =
+      FirebaseFirestore.instance.collection("Products");
+  final CollectionReference _userRef =
+      FirebaseFirestore.instance.collection("Users");
+  int _selectedSize = 0;
+  var _selectedProductSize = "M";
+
+  //getting the current user who is logged in
+  User _user = FirebaseAuth.instance.currentUser;
+
+  Future _addToCart() {
+    //inserting data
+    return _userRef
+        .doc(_user.uid)
+        .collection("Cart")
+        .doc(widget.productId)
+        .set({"size": _selectedProductSize});
+  }
+
+  void _formErrorToast(String message, Color _color) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: _color,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
+
   @override
   Widget build(BuildContext context) {
-    print("$productId");
     return Scaffold(
         body: SafeArea(
       child: Stack(
         children: [
           FutureBuilder(
-            future: _productRef.doc(productId).get(),
+            future: _productRef.doc(widget.productId).get(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Scaffold(
@@ -29,6 +64,7 @@ class SingleProduct extends StatelessWidget {
               } else if (snapshot.connectionState == ConnectionState.done) {
                 Map<String, dynamic> documentData = snapshot.data.data();
                 List imageList = documentData['images'];
+                List productSize = documentData['size'];
                 return ListView(
                   padding: EdgeInsets.only(top: 81),
                   children: [
@@ -70,6 +106,43 @@ class SingleProduct extends StatelessWidget {
                                 color: Color(0xff8F8F8F),
                                 fontWeight: FontWeight.w100),
                           ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          //Product size
+                          Row(
+                            children: [
+                              for (var i = 0; i < productSize.length; i++)
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      _selectedSize = i;
+                                      _selectedProductSize = productSize[i];
+                                    });
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(right: 19),
+                                    alignment: Alignment.center,
+                                    height: 45,
+                                    width: 45,
+                                    color: _selectedSize == i
+                                        ? Theme.of(context).accentColor
+                                        : Color(0xffDCDCDC),
+                                    child: Text(
+                                      "${productSize[i]}",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: _selectedSize == i
+                                              ? Colors.white
+                                              : Constants.kPrimary),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+
+                          //Add to favorite or cart
                         ],
                       ),
                     )
@@ -82,7 +155,42 @@ class SingleProduct extends StatelessWidget {
               }
             },
           ),
-          ActionBar()
+          ActionBar(),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(25, 15, 25, 15),
+              child: Row(
+                children: [
+                  Container(
+                      padding: EdgeInsets.all(14),
+                      margin: EdgeInsets.only(right: 10),
+                      color: Color(0xffdcdcdc),
+                      child: Icon(Icons.bookmark_outline)),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () async {
+                        await _addToCart();
+                        _formErrorToast("Product added to cart", Colors.green);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+                        color: Constants.kPrimary,
+                        child: Text(
+                          "Add to cart",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
         ],
       ),
     ));
