@@ -16,6 +16,7 @@ class ProductCard extends StatelessWidget {
       onTap: () {
         Get.to(SingleProduct(
           productId: productId,
+          price: price,
         ));
       },
       child: Stack(

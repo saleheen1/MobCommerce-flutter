@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobile_seller/services/firebaseServices.dart';
@@ -9,8 +7,9 @@ import 'package:mobile_seller/widgets/productSlider.dart';
 
 class SingleProduct extends StatefulWidget {
   final productId;
+  final String price;
 
-  SingleProduct({Key key, this.productId}) : super(key: key);
+  SingleProduct({Key key, this.productId, this.price = "0"}) : super(key: key);
 
   @override
   _SingleProductState createState() => _SingleProductState();
@@ -28,7 +27,7 @@ class _SingleProductState extends State<SingleProduct> {
         .doc(_firebaseServices.getUserId())
         .collection("Cart")
         .doc(widget.productId)
-        .set({"size": _selectedProductSize});
+        .set({"size": _selectedProductSize, "price": widget.price});
   }
 
   Future _saveItem() {

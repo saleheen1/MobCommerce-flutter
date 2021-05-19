@@ -61,9 +61,9 @@ class ActionBar extends StatelessWidget {
                   },
                   child: Container(
                     alignment: Alignment.center,
-                    height: 30,
-                    width: 30,
-                    color: Constants.kPrimary,
+                    height: 40,
+                    width: 40,
+                    // color: Constants.kPrimary,
                     child: StreamBuilder(
                       //quering everything from collection Cart-- to get it real time using snapshot() is needed
                       stream: _userRef
@@ -77,9 +77,27 @@ class ActionBar extends StatelessWidget {
                           List _documents = snapshot.data.docs;
                           totalItems = _documents.length;
                         }
-                        return Text(
-                          "$totalItems" ?? "0",
-                          style: TextStyle(color: Colors.white),
+                        return Stack(
+                          children: [
+                            Icon(Icons.shopping_cart_outlined,
+                                size: 30, color: Constants.kPrimary),
+                            Text(
+                              "$totalItems" ?? "0",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Positioned(
+                              right: 0,
+                              top: 2,
+                              child: Container(
+                                height: 10,
+                                width: 10,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Theme.of(context).accentColor,
+                                ),
+                              ),
+                            )
+                          ],
                         );
                       },
                     ),
