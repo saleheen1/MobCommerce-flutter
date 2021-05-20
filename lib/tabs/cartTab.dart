@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_seller/screens/singleProduct.dart';
 import 'package:mobile_seller/services/firebaseServices.dart';
+import 'package:mobile_seller/services/services.dart';
 import 'package:mobile_seller/widgets/actionBar.dart';
 import 'package:mobile_seller/widgets/constants.dart';
+
+Services _services = Services();
 
 class CartPage extends StatefulWidget {
   @override
@@ -27,12 +30,13 @@ class _CartPageState extends State<CartPage> {
       body: SafeArea(
         child: Stack(
           children: [
-            FutureBuilder<QuerySnapshot>(
-              future: _firebaseServices.userRef
+            StreamBuilder<QuerySnapshot>(
+              stream: _firebaseServices.userRef
                   .doc(_firebaseServices.getUserId())
                   .collection("Cart")
-                  .get(),
+                  .snapshots(),
               builder: (context, snapshot) {
+                int pPrice = 0;
                 if (snapshot.hasError) {
                   return Scaffold(
                     body: Center(
@@ -55,10 +59,10 @@ class _CartPageState extends State<CartPage> {
                                       productId: document.id,
                                     ));
                                   },
-                                  child: StreamBuilder(
-                                    stream: _firebaseServices.productRef
+                                  child: FutureBuilder(
+                                    future: _firebaseServices.productRef
                                         .doc(document.id)
-                                        .snapshots(),
+                                        .get(),
                                     builder: (context, productSnap) {
                                       if (productSnap.hasError) {
                                         return Center(
@@ -68,6 +72,11 @@ class _CartPageState extends State<CartPage> {
                                       } else if (productSnap.connectionState ==
                                           ConnectionState.done) {
                                         Map _product = productSnap.data.data();
+                                        pPrice = pPrice + _product['price'];
+                                        Future.delayed(Duration.zero, () async {
+                                          _services.productPrice.value = pPrice;
+                                        });
+
                                         return Padding(
                                           padding: const EdgeInsets.symmetric(
                                             vertical: 16.0,
@@ -174,33 +183,43 @@ class _CartPageState extends State<CartPage> {
                         ),
                       ),
                       // Text("$"),
-                      // StreamBuilder(
-                      //   stream: _firebaseServices.userRef
-                      //       .doc(_firebaseServices.getUserId())
-                      //       .collection("Cart")
-                      //       .snapshots(),
-                      //   builder: (context, priceSnap) {
-                      //     if (priceSnap.hasError) {
-                      //       return Center(
-                      //         child: Text("${priceSnap.error}"),
-                      //       );
-                      //     } else if (priceSnap.connectionState ==
-                      //         ConnectionState.active) {
-                      //           return Text("Total item: $priceSnap.")
-                      //     } else {
-                      //       return Center();
-                      //     }
-                      //   },
-                      // ),
-                      Container(
-                          padding: EdgeInsets.only(top: 20, bottom: 20),
-                          child: Text(
-                            "Total items: 3",
-                            style: TextStyle(
-                              color: Constants.kPrimary,
-                              fontSize: 17,
-                            ),
-                          )),
+
+                      StreamBuilder(
+                        //quering everything from collection Cart-- to get it real time using snapshot() is needed
+                        stream: _firebaseServices.userRef
+                            .doc(_firebaseServices.getUserId())
+                            .collection("Cart")
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          int totalItems;
+                          if (snapshot.connectionState ==
+                              ConnectionState.active) {
+                            List _documents = snapshot.data.docs;
+                            totalItems = _documents.length;
+                          }
+                          return Column(
+                            children: [
+                              Obx(
+                                () => Text(
+                                  totalItems != 0
+                                      ? "\$${_services.productPrice.value}"
+                                      : "\$${"0"}",
+                                  style: TextStyle(
+                                      fontSize: 40,
+                                      color: Theme.of(context).accentColor,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                              Text(
+                                "Total items: $totalItems" ?? "0",
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
                       InkWell(
                         onTap: () {},
                         child: Container(
