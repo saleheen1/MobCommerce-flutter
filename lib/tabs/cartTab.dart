@@ -85,88 +85,96 @@ class _CartPageState extends State<CartPage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    width: 90,
-                                                    height: 90,
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
+                                              Expanded(
+                                                flex: 5,
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      padding:
+                                                          EdgeInsets.all(9),
+                                                      width: 90,
+                                                      height: 90,
                                                       child: Image.network(
                                                         "${_product['images'][0]}",
-                                                        fit: BoxFit.cover,
+                                                        fit: BoxFit.fitHeight,
                                                       ),
                                                     ),
-                                                  ),
-                                                  Container(
-                                                    padding: EdgeInsets.only(
-                                                      left: 16.0,
-                                                    ),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          "${_product['name']}",
-                                                          style: TextStyle(
-                                                              fontSize: 18.0,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                            vertical: 4.0,
-                                                          ),
-                                                          child: Text(
-                                                            "\$${_product['price']}",
+                                                    Container(
+                                                      padding: EdgeInsets.only(
+                                                        left: 16.0,
+                                                      ),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            "${_product['name']}",
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                             style: TextStyle(
-                                                                fontSize: 16.0,
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .accentColor,
+                                                                fontSize: 18.0,
+                                                                color: Colors
+                                                                    .black,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600),
                                                           ),
-                                                        ),
-                                                        Text(
-                                                          "Size: ${document.data()['size']}",
-                                                          style: TextStyle(
-                                                              fontSize: 16.0,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
-                                                        ),
-                                                      ],
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                              vertical: 4.0,
+                                                            ),
+                                                            child: Text(
+                                                              "\$${_product['price']}",
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      16.0,
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .accentColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "Size: ${document.data()['size']}",
+                                                            style: TextStyle(
+                                                                fontSize: 16.0,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
-                                              InkWell(
-                                                onTap: () {
-                                                  _removeProduct(document.id);
-                                                },
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      20.0),
-                                                  child: Icon(
-                                                    Icons.delete_outline,
-                                                    size: 30,
-                                                    color: Theme.of(context)
-                                                        .accentColor,
+                                              Expanded(
+                                                flex: 1,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    _removeProduct(document.id);
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            20.0),
+                                                    child: Icon(
+                                                      Icons.delete_outline,
+                                                      size: 30,
+                                                      color: Theme.of(context)
+                                                          .accentColor,
+                                                    ),
                                                   ),
                                                 ),
                                               )
@@ -206,7 +214,7 @@ class _CartPageState extends State<CartPage> {
                                       : "\$${"0"}",
                                   style: TextStyle(
                                       fontSize: 40,
-                                      color: Theme.of(context).accentColor,
+                                      color: Constants.kPrimary,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
@@ -223,9 +231,12 @@ class _CartPageState extends State<CartPage> {
                       InkWell(
                         onTap: () {},
                         child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7),
+                            color: Theme.of(context).accentColor,
+                          ),
                           padding: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 25),
-                          color: Constants.kPrimary,
                           child: Text(
                             "Proceed to checkout",
                             style: TextStyle(

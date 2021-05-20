@@ -15,7 +15,8 @@ class _ProductSliderState extends State<ProductSlider> {
     return Stack(
       children: [
         Container(
-            height: 250,
+            padding: EdgeInsets.all(20),
+            height: 300,
             width: double.infinity,
             // height: 200,
             child: PageView(
@@ -28,7 +29,7 @@ class _ProductSliderState extends State<ProductSlider> {
                 for (var i = 0; i < widget.imageList.length; i++)
                   Image.network(
                     "${widget.imageList[i]}",
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fitHeight,
                   ),
               ],
             )),
@@ -47,7 +48,7 @@ class _ProductSliderState extends State<ProductSlider> {
                     borderRadius: BorderRadius.circular(50),
                     color: _selectedSlide == i
                         ? Theme.of(context).accentColor
-                        : Colors.white,
+                        : Colors.grey[400],
                   ),
                   width: _selectedSlide == i ? 15 : 6,
                   height: 7,

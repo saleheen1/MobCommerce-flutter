@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_seller/screens/singleProduct.dart';
+import 'package:mobile_seller/widgets/constants.dart';
 
 class ProductCard extends StatelessWidget {
   final String imageUrl;
@@ -19,58 +20,55 @@ class ProductCard extends StatelessWidget {
           price: price,
         ));
       },
-      child: Stack(
+      child: Column(
         children: [
           Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Color(0xff000000).withOpacity(0.01),
+                  spreadRadius: 0,
+                  blurRadius: 13,
+                  offset: Offset(4, 4), // changes position of shadow
+                ),
+              ],
+            ),
+            padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
             width: double.infinity,
-            height: 250,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                "$imageUrl",
-                fit: BoxFit.cover,
-              ),
+            height: 300,
+            child: Column(
+              children: [
+                Container(
+                  height: 200,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(
+                      "$imageUrl",
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                ),
+                Text(
+                  "$title" ?? "Product Name",
+                  style: TextStyle(
+                      color: Constants.kPrimary,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "\$$price" ?? "0",
+                  style: TextStyle(
+                      color: Colors.grey[600],
+                      fontWeight: FontWeight.w600,
+                      fontSize: 17),
+                )
+              ],
             ),
           ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(12),
-                  bottomRight: Radius.circular(12)),
-              child: Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                  colors: [
-                    Colors.black.withOpacity(0.5),
-                    Colors.black.withOpacity(0.5),
-                  ],
-                )),
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "$title" ?? "Product Name",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 17),
-                    ),
-                    Text(
-                      "\$$price" ?? "0",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 17),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          )
         ],
       ),
     );

@@ -42,7 +42,6 @@ class HomeTab extends StatelessWidget {
           },
         ),
         ActionBar(
-          title: "Home",
           hasBackArrow: false,
         ),
       ],

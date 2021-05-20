@@ -90,9 +90,9 @@ class _SingleProductState extends State<SingleProduct> {
                               Text(
                                 "\$${documentData['price']}",
                                 style: TextStyle(
-                                    color: Theme.of(context).accentColor,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20),
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.grey[600],
+                                    fontSize: 23),
                               ),
                             ],
                           ),
@@ -125,13 +125,16 @@ class _SingleProductState extends State<SingleProduct> {
                                     });
                                   },
                                   child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(7),
+                                      color: _selectedSize == i
+                                          ? Theme.of(context).accentColor
+                                          : Color(0xffEAEAEA),
+                                    ),
                                     margin: EdgeInsets.only(right: 19),
                                     alignment: Alignment.center,
                                     height: 45,
                                     width: 45,
-                                    color: _selectedSize == i
-                                        ? Theme.of(context).accentColor
-                                        : Color(0xffDCDCDC),
                                     child: Text(
                                       "${productSize[i]}",
                                       style: TextStyle(
@@ -174,9 +177,12 @@ class _SingleProductState extends State<SingleProduct> {
                       _formErrorToast("Product saved", Color(0xff65C916));
                     },
                     child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7),
+                          color: Color(0xffEAEAEA),
+                        ),
                         padding: EdgeInsets.all(14),
                         margin: EdgeInsets.only(right: 10),
-                        color: Color(0xffdcdcdc),
                         child: Icon(Icons.bookmark_outline)),
                   ),
                   Expanded(
@@ -187,10 +193,13 @@ class _SingleProductState extends State<SingleProduct> {
                             "Product added to cart", Color(0xff65C916));
                       },
                       child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7),
+                          color: Theme.of(context).accentColor,
+                        ),
                         alignment: Alignment.center,
                         padding:
                             EdgeInsets.symmetric(horizontal: 18, vertical: 14),
-                        color: Constants.kPrimary,
                         child: Text(
                           "Add to cart",
                           style: TextStyle(color: Colors.white),

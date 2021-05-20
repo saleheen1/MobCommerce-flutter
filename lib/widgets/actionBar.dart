@@ -81,10 +81,10 @@ class ActionBar extends StatelessWidget {
                           children: [
                             Icon(Icons.shopping_cart_outlined,
                                 size: 30, color: Constants.kPrimary),
-                            Text(
-                              "$totalItems" ?? "0",
-                              style: TextStyle(color: Colors.white),
-                            ),
+                            // Text(
+                            //   "$totalItems" ?? "0",
+                            //   style: TextStyle(color: Colors.white),
+                            // ),
                             Positioned(
                               right: 0,
                               top: 2,

@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
           visualDensity: VisualDensity.adaptivePlatformDensity,
           // accentColor: Color(0xff7209b7)
-          accentColor: Color(0xffff6d00)),
+          accentColor: Color(0xffF8974F)),
       home: LandingPage(),
     );
   }
